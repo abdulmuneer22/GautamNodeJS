@@ -17,14 +17,34 @@ var server = app.listen(3900, function () {
 
 
 app.get('/',(req,res)=>{
-    res.send("Hello World !!!")
+    
+    // Get Secret Key
+    axios.post('https://gauthamwp-abdulmuneer22.c9users.io/register',{
+        username : "James",
+        password : "1234567890"
+    })
+    .then((response)=>{
+        // console.log(response)
+        var _secretkey = response.data
+        axios.post('https://gauthamwp-abdulmuneer22.c9users.io/memberDetails',{
+            secretkey : _secretkey
+        })
+        .then((response)=>{
+            console.log(response.data)
+            res.send(response.data)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+
+    // Get Memeber Data
+
+
+
+
 })
 
-app.post('/login',(req,res)=>{
-
-// var username = req.body.username
-// var password = req.body.password
-var username = req.body.username
-
-res.send("Hello" + username)
-})
